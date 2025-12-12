@@ -1,0 +1,143 @@
+{
+  "customers": [
+    {
+      "id": 1,
+      "name": "Swaroop  Rayapalli",
+      "email": "rswaroop0608@gmail.com",
+      "phone": "9030600126",
+      "created_at": "2025-12-07T13:26:01.820Z"
+    },
+    {
+      "id": 2,
+      "name": "Swaroop",
+      "email": "rswaroop2006@gmail.com",
+      "phone": "9030600126",
+      "created_at": "2025-12-08T18:03:22.575Z"
+    }
+  ],
+  "pets": [
+    {
+      "id": 1,
+      "customer_id": 1,
+      "name": "Dashund",
+      "type": "3years",
+      "breed": null,
+      "age": "very active",
+      "special_needs": "Dashund,3years,very active",
+      "created_at": "2025-12-07T13:26:01.822Z"
+    },
+    {
+      "id": 2,
+      "customer_id": 1,
+      "name": "Dachshund",
+      "type": "3years",
+      "breed": null,
+      "age": "very active",
+      "special_needs": "Dachshund, 3years, very active",
+      "created_at": "2025-12-07T14:09:34.904Z"
+    },
+    {
+      "id": 3,
+      "customer_id": 1,
+      "name": "Dachshund",
+      "type": "3 years",
+      "breed": null,
+      "age": "very active",
+      "special_needs": "Dachshund, 3 years, very active",
+      "created_at": "2025-12-07T14:56:53.482Z"
+    }
+  ],
+  "services": [
+    {
+      "id": 1,
+      "name": "Pet Sitting",
+      "description": "In-home care",
+      "price": 45,
+      "duration_minutes": 60
+    },
+    {
+      "id": 2,
+      "name": "Dog Walking",
+      "description": "Exercise and adventures",
+      "price": 25,
+      "duration_minutes": 30
+    },
+    {
+      "id": 3,
+      "name": "Pet Boarding",
+      "description": "Overnight stays",
+      "price": 75,
+      "duration_minutes": 1440
+    },
+    {
+      "id": 4,
+      "name": "Grooming",
+      "description": "Professional grooming",
+      "price": 60,
+      "duration_minutes": 90
+    },
+    {
+      "id": 5,
+      "name": "Vet Visits",
+      "description": "Transportation to vet",
+      "price": 35,
+      "duration_minutes": 120
+    },
+    {
+      "id": 6,
+      "name": "Training Support",
+      "description": "Training routines",
+      "price": 50,
+      "duration_minutes": 60
+    }
+  ],
+  "bookings": [
+    {
+      "id": 3,
+      "customer_id": 1,
+      "pet_id": 3,
+      "service_id": 3,
+      "booking_date": "2025-12-07",
+      "booking_time": "22:00:00",
+      "status": "confirmed",
+      "notes": "Dachshund, 3 years, very active",
+      "created_at": "2025-12-07T14:56:53.485Z"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "customer_id": 1,
+      "email": "rswaroop0608@gmail.com",
+      "password_hash": "$2b$10$xEWBtI/z2MsY2rzmpGqBBuSUhXsZIUydrrxY7woBev4qZQOEG6HXK",
+      "created_at": "2025-12-08T15:44:46.768Z"
+    },
+    {
+      "id": 2,
+      "customer_id": 2,
+      "email": "rswaroop2006@gmail.com",
+      "password_hash": "$2b$10$5Pe96caeh1ut0aCSxXryJ.rVSBSXKcdm43k9ebUIs4K6mY3mBrnoG",
+      "created_at": "2025-12-08T18:03:22.647Z"
+    }
+  ],
+  "admins": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password_hash": "$2b$10$IgPdGg72ITAFvcqYLPr5g.s6o9XE5ZjYxnq3z9SfD7MyWDrF9Rg1m",
+      "created_at": "2025-12-08T18:18:57.743Z",
+      "email": "admin@pawcare.com",
+      "profile_picture": null
+    }
+  ],
+  "feedback": [],
+  "nextId": {
+    "customers": 3,
+    "pets": 4,
+    "services": 7,
+    "bookings": 4,
+    "users": 3,
+    "admins": 2,
+    "feedback": 1
+  }
+}
