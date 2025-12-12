@@ -804,27 +804,53 @@ async function startServer() {
             // Create pet if pet information provided
             let petId = null;
             if (petName) {
+                // Parse petAge - convert to integer or null if not a number
+                let parsedPetAge = null;
+                if (petAge) {
+                    const ageNum = parseInt(petAge);
+                    if (!isNaN(ageNum)) {
+                        parsedPetAge = ageNum;
+                    }
+                }
+
                 const petResult = await createPet(
                     customerId,
                     petName,
                     petType || 'Not specified',
                     null, // breed
-                    petAge || null,
+                    parsedPetAge,
                     message || null
                 );
                 petId = petResult.lastInsertRowid;
             }
 
-            // Map service name to service ID
-            const serviceMap = {
-                'pet-sitting': 1,
-                'dog-walking': 2,
-                'pet-boarding': 3,
-                'grooming': 4,
-                'vet-visits': 5,
-                'training': 6
+            // Get service ID from database by name
+            let serviceId = null;
+
+            // Map frontend service values to database service names
+            const serviceNameMap = {
+                'pet-sitting': 'Pet Sitting',
+                'dog-walking': 'Dog Walking',
+                'pet-boarding': 'Pet Boarding',
+                'grooming': 'Grooming',
+                'vet-visits': 'Vet Visits',
+                'training': 'Training Support'
             };
-            const serviceId = serviceMap[service] || 1;
+
+            const serviceName = serviceNameMap[service] || service;
+
+            // Look up service in database
+            const services = await getAllServices();
+            const foundService = services.find(s =>
+                s.name.toLowerCase() === serviceName.toLowerCase()
+            );
+
+            if (foundService) {
+                serviceId = foundService.id;
+            } else {
+                // Fallback to first service if not found
+                serviceId = services[0]?.id || 1;
+            }
 
             // Use custom booking date and time from request, or default to tomorrow at 10:00 AM
             let bookingDate, bookingTime;
