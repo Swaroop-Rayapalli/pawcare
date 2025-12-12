@@ -161,7 +161,7 @@ async function startServer() {
     await initializeDatabase();
 
     // Auto-initialize services if they don't exist
-    const services = getAllServices();
+    const services = await getAllServices();
     if (services.length === 0) {
         console.log('📋 Initializing services...');
         const { createService } = require('./database');
@@ -173,8 +173,13 @@ async function startServer() {
             { name: 'Vet Visits', description: 'Transportation to vet', price: 35.00, duration: 120 },
             { name: 'Training Support', description: 'Training routines', price: 50.00, duration: 60 }
         ];
-        defaultServices.forEach(s => createService(s.name, s.description, s.price, s.duration));
+
+        for (const s of defaultServices) {
+            await createService(s.name, s.description, s.price, s.duration);
+        }
         console.log('✅ Services initialized');
+    } else {
+        console.log(`✅ Found ${services.length} services in database`);
     }
 
     // Initialize email service
