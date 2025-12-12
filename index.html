@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Professional pet care services with experienced, loving caretakers. Pet sitting, dog walking, boarding & grooming. Insured, background-checked staff. Book trusted pet care today!">
+    <meta name="keywords"
+        content="pet care, pet sitting, dog walking, pet boarding, pet grooming, professional pet sitters, trusted pet care">
+    <meta name="author" content="PawCare">
+
+    <!-- OpenGraph Tags for Social Sharing -->
+    <meta property="og:title" content="PawCare - Professional Pet Care Services | Trusted Pet Sitters">
+    <meta property="og:description"
+        content="Professional, loving care for your furry family members. Trusted by thousands of pet parents.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:3000">
+    <meta property="og:site_name" content="PawCare">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PawCare - Professional Pet Care Services">
+    <meta name="twitter:description"
+        content="Professional, loving care for your furry family members. Trusted by thousands of pet parents.">
+
+    <title>PawCare - Professional Pet Care Services | Trusted Pet Sitters</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="toast.css">
+    <link rel="stylesheet" href="modal.css">
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "PawCare",
+      "description": "Professional pet care services including pet sitting, dog walking, boarding, and grooming",
+      "@id": "http://localhost:3000",
+      "url": "http://localhost:3000",
+      "telephone": "+91-9030600126",
+      "email": "pawcare376@gmail.com",
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "150",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Pet Care Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Pet Sitting",
+              "description": "In-home care while you're away"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Dog Walking",
+              "description": "Regular exercise and outdoor adventures"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Pet Boarding",
+              "description": "Safe, comfortable overnight stays"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Skip to main content link for keyboard users -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <!-- Navigation -->
+    <header>
+        <nav id="main-navigation" class="navbar" aria-label="Main navigation">
+            <div class="container">
+                <div class="nav-content">
+                    <a href="#home" class="logo">
+                        <span class="logo-icon">🐾</span>
+                        <span class="logo-text">PawCare</span>
+                    </a>
+                    <button id="mobile-menu-toggle" class="mobile-menu-btn" aria-label="Toggle menu"
+                        aria-expanded="false">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <ul id="nav-menu" class="nav-menu">
+                        <li><a href="#home" class="nav-link">Home</a></li>
+                        <li><a href="#services" class="nav-link">Services</a></li>
+                        <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                        <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                        <li><a href="#about" class="nav-link">About</a></li>
+                        <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                        <li><a href="customer-login.html" class="nav-link">My Account</a></li>
+                        <li><a href="#contact" class="nav-link">Book Now</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-background"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title animate-fade-in">
+                        Your Pet's Home Away From Home
+                    </h1>
+                    <p class="hero-subtitle animate-fade-in">
+                        Professional, loving care for your furry family members. Trusted by thousands of pet parents.
+                    </p>
+                    <div class="hero-cta animate-fade-in">
+                        <a href="#contact" class="btn btn-primary btn-large">Book Care Today</a>
+                        <a href="#services" class="btn btn-secondary btn-large">Our Services</a>
+                    </div>
+                    <div class="hero-stats animate-fade-in">
+                        <div class="stat-item">
+                            <div class="stat-number">5000+</div>
+                            <div class="stat-label">Happy Pets</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Satisfaction Rate</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Premium Services</h2>
+                    <p class="section-subtitle">Comprehensive care tailored to your pet's unique needs</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card glass-card" id="service-pet-sitting">
+                        <div class="service-icon">🏠</div>
+                        <h3 class="service-title">Pet Sitting</h3>
+                        <p class="service-description">
+                            In-home care while you're away. Your pet stays comfortable in their familiar environment
+                            with
+                            personalized attention.
+                        </p>
+                        <ul class="service-features">
+                            <li>Daily updates & photos</li>
+                            <li>Medication administration</li>
+                            <li>Playtime & cuddles</li>
+                        </ul>
+                        <a href="#contact" class="service-link">Learn More →</a>
+                    </div>
+
+                    <div class="service-card glass-card" id="service-dog-walking">
+                        <div class="service-icon">🦮</div>
+                        <h3 class="service-title">Dog Walking</h3>
+                        <p class="service-description">
+                            Regular exercise and outdoor adventures. Keep your pup happy, healthy, and well-socialized.
+                        </p>
+                        <ul class="service-features">
+                            <li>Flexible scheduling</li>
+                            <li>GPS tracked walks</li>
+                            <li>Small group options</li>
+                        </ul>
+                        <a href="#contact" class="service-link">Learn More →</a>
+                    </div>
+
+                    <div class="service-card glass-card" id="service-pet-boarding">
+                        <div class="service-icon">🛏️</div>
+                        <h3 class="service-title">Pet Boarding</h3>
+                        <p class="service-description">
+                            Safe, comfortable overnight stays. Your pet enjoys a home-like setting with round-the-clock
+                            supervision.
+                        </p>
+                        <ul class="service-features">
+                            <li>Spacious accommodations</li>
+                            <li>Regular activity times</li>
+                            <li>Special diet catering</li>
+                        </ul>
+                        <a href="#contact" class="service-link">Learn More →</a>
+                    </div>
+
+                    <div class="service-card glass-card" id="service-grooming">
+                        <div class="service-icon">✨</div>
+                        <h3 class="service-title">Grooming</h3>
+                        <p class="service-description">
+                            Professional grooming services. Keep your pet looking and feeling their absolute best.
+                        </p>
+                        <ul class="service-features">
+                            <li>Bath & brush</li>
+                            <li>Nail trimming</li>
+                            <li>Breed-specific cuts</li>
+                        </ul>
+                        <a href="#contact" class="service-link">Learn More →</a>
+                    </div>
+
+                    <div class="service-card glass-card" id="service-vet-visits">
+                        <div class="service-icon">🏥</div>
+                        <h3 class="service-title">Vet Visits</h3>
+                        <p class="service-description">
+                            Transportation to appointments. We ensure your pet gets to their vet visits safely and on
+                            time.
+                        </p>
+                        <ul class="service-features">
+                            <li>Safe transportation</li>
+                            <li>Appointment coordination</li>
+                            <li>Health updates</li>
+                        </ul>
+                        <a href="#contact" class="service-link">Learn More →</a>
+                    </div>
+
+                    <div class="service-card glass-card" id="service-training">
+                        <div class="service-icon">🎓</div>
+                        <h3 class="service-title">Training Support</h3>
+                        <p class="service-description">
+                            Reinforcement of training routines. We maintain consistency with your pet's training
+                            program.
+                        </p>
+                        <ul class="service-features">
+                            <li>Positive reinforcement</li>
+                            <li>Custom routines</li>
+                            <li>Behavioral support</li>
+                        </ul>
+                        <a href="#contact" class="service-link">Learn More →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2 class="section-title">Why Choose PawCare?</h2>
+                        <p class="about-description">
+                            We're more than just pet sitters—we're passionate animal lovers dedicated to providing the
+                            highest quality care for your furry family members.
+                        </p>
+                        <div class="about-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div class="feature-content">
+                                    <h3>Experienced Professionals</h3>
+                                    <p>All caretakers are thoroughly vetted, trained, and insured</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div class="feature-content">
+                                    <h3>Personalized Care</h3>
+                                    <p>Custom care plans tailored to your pet's unique personality and needs</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div class="feature-content">
+                                    <h3>Peace of Mind</h3>
+                                    <p>Real-time updates, photos, and 24/7 emergency support</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div class="feature-content">
+                                    <h3>Trusted Community</h3>
+                                    <p>Join thousands of satisfied pet parents in our caring community</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-image">
+                        <div class="image-slider">
+                            <div class="slider-container">
+                                <img src="images/about-caretaker.jpg" alt="Professional pet caretaker with pets"
+                                    class="slider-img active">
+                                <img src="images/service-sitting.jpg" alt="Pet sitting service" class="slider-img">
+                                <img src="images/service-walking.jpg" alt="Dog walking service" class="slider-img">
+                                <img src="images/service-grooming.jpg" alt="Pet grooming service" class="slider-img">
+                                <img src="images/service-boarding.jpg" alt="Pet boarding service" class="slider-img">
+                            </div>
+                            <button class="slider-btn slider-btn-prev" aria-label="Previous image">‹</button>
+                            <button class="slider-btn slider-btn-next" aria-label="Next image">›</button>
+                            <div class="slider-dots">
+                                <span class="slider-dot active" data-slide="0"></span>
+                                <span class="slider-dot" data-slide="1"></span>
+                                <span class="slider-dot" data-slide="2"></span>
+                                <span class="slider-dot" data-slide="3"></span>
+                                <span class="slider-dot" data-slide="4"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust & Safety Section -->
+        <section class="trust-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">How We Keep Your Pet Safe</h2>
+                    <p class="section-subtitle">Your pet's safety and happiness are our top priorities</p>
+                </div>
+                <div class="trust-grid">
+                    <div class="trust-card glass-card">
+                        <div class="trust-icon">🛡️</div>
+                        <h3>Insured & Bonded</h3>
+                        <p>Full liability coverage and bonding for your complete peace of mind</p>
+                    </div>
+                    <div class="trust-card glass-card">
+                        <div class="trust-icon">✓</div>
+                        <h3>Background Checked</h3>
+                        <p>All caretakers undergo thorough background checks and verification</p>
+                    </div>
+                    <div class="trust-card glass-card">
+                        <div class="trust-icon">📞</div>
+                        <h3>24/7 Support</h3>
+                        <p>Round-the-clock customer support and emergency assistance</p>
+                    </div>
+                    <div class="trust-card glass-card">
+                        <div class="trust-icon">⭐</div>
+                        <h3>Satisfaction Guaranteed</h3>
+                        <p>100% satisfaction guarantee or your money back, no questions asked</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">What Pet Parents Say</h2>
+                    <p class="section-subtitle">Real stories from our happy clients</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card glass-card" id="testimonial-1">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text">
+                            "PawCare has been a lifesaver! My dog Max absolutely loves his walker, and I get the cutest
+                            photos every day. Highly recommend!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">👤</div>
+                            <div class="author-info">
+                                <div class="author-name">Sarah Johnson</div>
+                                <div class="author-pet">Max's Mom</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card glass-card" id="testimonial-2">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text">
+                            "I was nervous leaving my cats for a week, but the daily updates and videos put my mind at
+                            ease.
+                            They were so well cared for!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">👤</div>
+                            <div class="author-info">
+                                <div class="author-name">Michael Chen</div>
+                                <div class="author-pet">Luna & Oliver's Dad</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card glass-card" id="testimonial-3">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text">
+                            "Professional, reliable, and genuinely caring. Our puppy gets so excited when her sitter
+                            arrives. Best decision we made!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">👤</div>
+                            <div class="author-info">
+                                <div class="author-name">Emily Rodriguez</div>
+                                <div class="author-pet">Bella's Mom</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h2 class="section-title">Ready to Get Started?</h2>
+                        <p class="contact-description">
+                            Book your first visit today and discover why thousands of pet parents trust PawCare with
+                            their
+                            beloved companions.
+                        </p>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">📧</div>
+                                <div class="contact-text">
+                                    <div class="contact-label">Email</div>
+                                    <div class="contact-value">pawcare376@gmail.com</div>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">📱</div>
+                                <div class="contact-text">
+                                    <div class="contact-label">Phone</div>
+                                    <div class="contact-value">+91 9030600126</div>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">⏰</div>
+                                <div class="contact-text">
+                                    <div class="contact-label">Hours</div>
+                                    <div class="contact-value">24/7 Support Available</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href="#" class="social-link" aria-label="Facebook">📘</a>
+                            <a href="#" class="social-link" aria-label="Instagram">📷</a>
+                            <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+                        </div>
+                    </div>
+                    <div class="contact-form-wrapper">
+                        <form id="booking-form" class="contact-form glass-card">
+                            <h3>Book a Service</h3>
+                            <div class="form-group">
+                                <label for="name">Your Name</label>
+                                <input type="text" id="name" name="name" required placeholder="John Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required placeholder="john@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" required placeholder="+91 1234567890">
+                            </div>
+                            <div class="form-group">
+                                <label for="service">Service Needed</label>
+                                <select id="service" name="service" required>
+                                    <option value="">Select a service</option>
+                                    <option value="pet-sitting">Pet Sitting</option>
+                                    <option value="dog-walking">Dog Walking</option>
+                                    <option value="pet-boarding">Pet Boarding</option>
+                                    <option value="grooming">Grooming</option>
+                                    <option value="vet-visits">Vet Visits</option>
+                                    <option value="training">Training Support</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking-date">Preferred Date</label>
+                                <input type="date" id="booking-date" name="bookingDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking-hour">Preferred Time</label>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem;">
+                                    <select id="booking-hour" name="bookingHour" required
+                                        style="padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-family: 'Inter', sans-serif;">
+                                        <option value="">Hour</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                    <select id="booking-minute" name="bookingMinute" required
+                                        style="padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-family: 'Inter', sans-serif;">
+                                        <option value="">Min</option>
+                                        <option value="00">00</option>
+                                        <option value="15">15</option>
+                                        <option value="30">30</option>
+                                        <option value="45">45</option>
+                                    </select>
+                                    <select id="booking-period" name="bookingPeriod" required
+                                        style="padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-family: 'Inter', sans-serif;">
+                                        <option value="">AM/PM</option>
+                                        <option value="AM">AM</option>
+                                        <option value="PM">PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Tell us about your pet</label>
+                                <textarea id="message" name="message" rows="4"
+                                    placeholder="Pet type, age, special needs, etc."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-large btn-full">Request Booking</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer Feedback Section -->
+        <section id="feedback" class="feedback-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Share Your Experience</h2>
+                    <p class="section-subtitle">Help us improve our services with your valuable feedback</p>
+                </div>
+                <div class="feedback-content">
+                    <form id="feedback-form" class="feedback-form glass-card">
+                        <div class="form-group">
+                            <label for="feedback-name">Your Name *</label>
+                            <input type="text" id="feedback-name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedback-email">Email Address *</label>
+                            <input type="email" id="feedback-email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Rating *</label>
+                            <div class="star-rating" id="star-rating">
+                                <span class="star" data-rating="1">☆</span>
+                                <span class="star" data-rating="2">☆</span>
+                                <span class="star" data-rating="3">☆</span>
+                                <span class="star" data-rating="4">☆</span>
+                                <span class="star" data-rating="5">☆</span>
+                            </div>
+                            <input type="hidden" id="feedback-rating" name="rating" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedback-category">Feedback Category *</label>
+                            <select id="feedback-category" name="category" required>
+                                <option value="">Select a category</option>
+                                <option value="service-quality">Service Quality</option>
+                                <option value="caretaker">Caretaker Performance</option>
+                                <option value="booking-process">Booking Process</option>
+                                <option value="pricing">Pricing</option>
+                                <option value="communication">Communication</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedback-message">Your Feedback *</label>
+                            <textarea id="feedback-message" name="message" rows="5" required
+                                placeholder="Tell us about your experience..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="feedback-public" name="public">
+                                <span>I agree to share this feedback publicly as a testimonial</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-large">Submit Feedback</button>
+                    </form>
+
+                    <div class="feedback-info">
+                        <div class="info-card glass-card">
+                            <div class="info-icon">💬</div>
+                            <h3>Why Your Feedback Matters</h3>
+                            <p>Your feedback helps us continuously improve our services and provide the best care for
+                                your pets.</p>
+                        </div>
+                        <div class="info-card glass-card">
+                            <div class="info-icon">🔒</div>
+                            <h3>Privacy Assured</h3>
+                            <p>Your feedback is confidential unless you choose to share it publicly. We never share your
+                                personal information.</p>
+                        </div>
+                        <div class="info-card glass-card">
+                            <div class="info-icon">⚡</div>
+                            <h3>Quick Response</h3>
+                            <p>We review all feedback within 24 hours and respond to concerns promptly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <span class="logo-icon">🐾</span>
+                            <span class="logo-text">PawCare</span>
+                        </div>
+                        <p class="footer-tagline">Professional pet care with love</p>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Legal</h3>
+                        <ul>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 PawCare. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Toast Container -->
+        <div class="toast-container" id="toast-container"></div>
+
+        <!-- Success Modal -->
+        <div class="success-modal" id="success-modal">
+            <div class="success-modal-content">
+                <button class="modal-close" onclick="closeSuccessModal()">×</button>
+                <div class="success-icon">✓</div>
+                <h3>Booking Confirmed!</h3>
+                <p>Thank you for choosing PawCare. We've received your booking request.</p>
+                <div class="booking-details" id="booking-summary"></div>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-secondary" onclick="closeSuccessModal()">Close</button>
+                    <button class="modal-btn modal-btn-primary" onclick="window.print()">Print Confirmation</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+</body>
+
+</html>

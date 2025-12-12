@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Frequently asked questions about PawCare pet services. Find answers about booking, services, payments, and more.">
+    <title>FAQ - PawCare Pet Services</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .faq-hero {
+            background: var(--gradient-hero);
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .faq-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .faq-hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .faq-search {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .faq-search input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .faq-search input:focus {
+            outline: none;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .faq-search-icon {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+
+        .faq-content {
+            padding: 4rem 0;
+        }
+
+        .faq-category {
+            margin-bottom: 3rem;
+        }
+
+        .category-title {
+            font-size: 1.75rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .category-icon {
+            font-size: 2rem;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            user-select: none;
+        }
+
+        .faq-question h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--primary);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .cta-section {
+            background: var(--bg-secondary);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .faq-question h3 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav id="main-navigation" class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🐾</span>
+                    <span class="logo-text">PawCare</span>
+                </a>
+                <button id="mobile-menu-toggle" class="mobile-menu-btn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul id="nav-menu" class="nav-menu">
+                    <li><a href="index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="index.html#services" class="nav-link">Services</a></li>
+                    <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                    <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                    <li><a href="index.html#contact" class="nav-link btn-primary">Book Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="faq-hero">
+        <div class="container">
+            <h1>Frequently Asked Questions</h1>
+            <p>Find answers to common questions about our pet care services</p>
+            <div class="faq-search">
+                <input type="text" id="faq-search-input" placeholder="Search for answers...">
+                <span class="faq-search-icon">🔍</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <section class="faq-content">
+        <div class="container">
+            <!-- General Questions -->
+            <div class="faq-category" data-category="general">
+                <h2 class="category-title">
+                    <span class="category-icon">❓</span>
+                    General Questions
+                </h2>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What is PawCare?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            PawCare is a professional pet care service providing in-home pet sitting, dog walking, pet
+                            boarding, grooming, vet visit transportation, and training support. We're dedicated to
+                            giving your pets the love and attention they deserve while you're away.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What areas do you serve?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We currently serve the greater metropolitan area and surrounding suburbs. Contact us to
+                            confirm if we service your specific location. We're constantly expanding our coverage area!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Are your pet sitters insured and bonded?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! All our pet care professionals are fully insured, bonded, and background-checked. We
+                            take the safety and security of your pets and home very seriously.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking & Scheduling -->
+            <div class="faq-category" data-category="booking">
+                <h2 class="category-title">
+                    <span class="category-icon">📅</span>
+                    Booking & Scheduling
+                </h2>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>How do I book a service?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            You can book through our website by filling out the booking form on the Contact page, or
+                            call us directly at +91 9030600126. We recommend booking at least 48 hours in advance,
+                            though we'll do our best to accommodate last-minute requests.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Can I schedule recurring services?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Absolutely! We offer recurring service packages for dog walking, pet sitting, and other
+                            services. Check our Pricing page for package deals that save you money on regular bookings.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What if I need to cancel or reschedule?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We understand plans change! Please give us at least 24 hours notice for cancellations or
+                            rescheduling to avoid any fees. You can contact us via email or phone to make changes to
+                            your booking.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services & Care -->
+            <div class="faq-category" data-category="services">
+                <h2 class="category-title">
+                    <span class="category-icon">🐕</span>
+                    Services & Care
+                </h2>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What happens during a pet sitting visit?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            During each visit, we'll feed your pet, provide fresh water, give medications if needed,
+                            clean litter boxes, provide playtime and exercise, and send you photo updates. We'll also
+                            bring in mail and water plants if requested.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Do you walk multiple dogs at once?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We offer both individual and small group walks. Group walks are limited to 3 dogs maximum to
+                            ensure safety and individual attention. Let us know your preference when booking.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Can you administer medication to my pet?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! Our pet sitters are trained to administer oral medications, topical treatments, and
+                            injections (like insulin). Please provide detailed instructions and ensure medications are
+                            clearly labeled.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What types of pets do you care for?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We care for dogs, cats, birds, rabbits, guinea pigs, hamsters, and most other small pets. If
+                            you have an exotic pet, please contact us to discuss their specific care needs.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payments & Pricing -->
+            <div class="faq-category" data-category="payments">
+                <h2 class="category-title">
+                    <span class="category-icon">💳</span>
+                    Payments & Pricing
+                </h2>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What payment methods do you accept?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We accept cash, credit/debit cards, UPI, and bank transfers. Payment is typically due at the
+                            time of service or can be set up for automatic billing with recurring services.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Do you offer discounts for multiple pets?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! We offer a 10% discount for each additional pet in the same household. Package deals
+                            also provide significant savings for regular services.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Are there any additional fees?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Our pricing is transparent with no hidden fees. Additional charges may apply for holiday
+                            bookings, last-minute requests (less than 24 hours), or services outside our normal coverage
+                            area.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safety & Emergency -->
+            <div class="faq-category" data-category="safety">
+                <h2 class="category-title">
+                    <span class="category-icon">🛡️</span>
+                    Safety & Emergency
+                </h2>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What happens in case of a pet emergency?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We have 24/7 emergency protocols in place. If your pet needs immediate veterinary care,
+                            we'll contact you immediately and take your pet to your preferred vet or the nearest
+                            emergency clinic. We always have your emergency contact information on hand.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>How do you ensure my home's security?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            All our staff are background-checked and bonded. We use secure key management systems, lock
+                            all doors and windows, and can adjust lights and blinds to maintain a lived-in appearance.
+                            We never share your address or schedule with anyone.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Do I need to provide vaccination records?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            For boarding and group dog walking services, we require proof of current vaccinations
+                            (rabies, DHPP, and Bordetella). This protects all pets in our care. Individual services
+                            don't require vaccination records.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Still Have Questions?</h2>
+            <p>We're here to help! Contact us and we'll be happy to answer any questions you have.</p>
+            <a href="index.html#contact" class="btn btn-primary btn-large">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="logo-icon">🐾</span>
+                        <span class="logo-text">PawCare</span>
+                    </div>
+                    <p class="footer-tagline">Professional pet care with love</p>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; Swaroop Rayapalli 2025 PawCare. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // FAQ Toggle Function
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const wasActive = faqItem.classList.contains('active');
+
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Open clicked item if it wasn't active
+            if (!wasActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        // FAQ Search Function
+        const searchInput = document.getElementById('faq-search-input');
+        searchInput.addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            const categories = document.querySelectorAll('.faq-category');
+            let hasResults = false;
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question h3').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    hasResults = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Show/hide categories based on visible items
+            categories.forEach(category => {
+                const visibleItems = category.querySelectorAll('.faq-item[style="display: block"]');
+                if (visibleItems.length > 0 || searchTerm === '') {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = 'none';
+                }
+            });
+
+            // Show no results message
+            let noResults = document.querySelector('.no-results');
+            if (!hasResults && searchTerm !== '') {
+                if (!noResults) {
+                    noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.innerHTML = '<h3>No results found</h3><p>Try searching with different keywords</p>';
+                    document.querySelector('.faq-content .container').appendChild(noResults);
+                }
+                noResults.style.display = 'block';
+            } else if (noResults) {
+                noResults.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

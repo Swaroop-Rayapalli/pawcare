@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portal - PawCare</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="toast.css">
+    <style>
+        body {
+            background: var(--bg-secondary);
+            min-height: 100vh;
+        }
+
+        .portal-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .portal-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .portal-header h1 {
+            font-family: var(--font-heading);
+            color: var(--text-primary);
+        }
+
+        .portal-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .bookings-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .booking-card {
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s;
+        }
+
+        .booking-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.1);
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .booking-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-confirmed {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .booking-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .detail-item {
+            font-size: 0.875rem;
+        }
+
+        .detail-label {
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        /* Tabs */
+        .portal-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Profile Section */
+        .profile-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        .profile-pic-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            margin-bottom: 1rem;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
+        .pic-upload-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+
+        .pic-upload-label:hover {
+            background: var(--border);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="toast-container" id="toast-container"></div>
+
+    <div class="portal-container">
+        <div class="portal-header">
+            <div>
+                <h1>Welcome, <span id="user-name">Customer</span>!</h1>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">Manage your pet care bookings</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <a href="index.html" class="btn btn-secondary">Home</a>
+                <button onclick="logout()" class="btn btn-primary">Logout</button>
+            </div>
+        </div>
+
+        <div class="portal-stats">
+            <div class="stat-card">
+                <h3>Total Bookings</h3>
+                <div class="number" id="total-bookings">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Upcoming</h3>
+                <div class="number" id="upcoming-bookings">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Completed</h3>
+                <div class="number" id="completed-bookings">0</div>
+            </div>
+        </div>
+
+        <div class="portal-tabs">
+            <button class="tab-btn active" onclick="showTab('bookings')">My Bookings</button>
+            <button class="tab-btn" onclick="showTab('profile')">My Profile</button>
+        </div>
+
+        <div id="bookings-section" class="bookings-section">
+            <h2 style="margin-bottom: 1.5rem;">My Bookings</h2>
+            <div id="bookings-container">
+                <div class="empty-state">
+                    <h3>Loading...</h3>
+                </div>
+            </div>
+        </div>
+
+        <div id="profile-section" class="profile-container" style="display: none;">
+            <!-- Profile Details -->
+            <div class="profile-card">
+                <h2 style="margin-bottom: 1.5rem;">Profile Details</h2>
+                <form id="profile-form" onsubmit="handleProfileUpdate(event)">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <img id="profile-pic-preview"
+                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f3f4f6'/%3E%3Cpath d='M50 50a20 20 0 1 0 0-40 20 20 0 0 0 0 40zm0 10c-26.7 0-40 13.3-40 40h80c0-26.7-13.3-40-40-40z' fill='%239ca3af'/%3E%3C/svg%3E"
+                            alt="Profile Picture" class="profile-pic-preview">
+                        <div>
+                            <label for="profile-pic-input" class="pic-upload-label">Change Picture</label>
+                            <input type="file" id="profile-pic-input" accept="image/*" style="display: none;"
+                                onchange="handleFileSelect(event)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profile-name">Full Name</label>
+                        <input type="text" id="profile-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-email">Email Address</label>
+                        <input type="email" id="profile-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-phone">Phone Number</label>
+                        <input type="tel" id="profile-phone" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Save Changes</button>
+                </form>
+            </div>
+
+            <!-- Change Password -->
+            <div class="profile-card">
+                <h2 style="margin-bottom: 1.5rem;">Change Password</h2>
+                <form id="password-form" onsubmit="handlePasswordChange(event)">
+                    <div class="form-group">
+                        <label for="current-password">Current Password</label>
+                        <input type="password" id="current-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-password">New Password</label>
+                        <input type="password" id="new-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm New Password</label>
+                        <input type="password" id="confirm-password" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary" style="width: 100%;">Update Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let userData = null;
+        let profilePictureBase64 = null;
+
+        function showTab(tabName) {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(tabName)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update sections
+            if (tabName === 'bookings') {
+                document.getElementById('bookings-section').style.display = 'block';
+                document.getElementById('profile-section').style.display = 'none';
+            } else {
+                document.getElementById('bookings-section').style.display = 'none';
+                document.getElementById('profile-section').style.display = 'grid';
+                // Populate/Reset profile form when opening tab
+                if (userData) {
+                    document.getElementById('profile-name').value = userData.name;
+                    document.getElementById('profile-email').value = userData.email;
+                    document.getElementById('profile-phone').value = userData.phone;
+                    if (userData.profile_picture) {
+                        document.getElementById('profile-pic-preview').src = userData.profile_picture;
+                    }
+                }
+            }
+        }
+
+        async function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                    showToast('Error', 'Image size must be less than 5MB', 'error');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    profilePictureBase64 = e.target.result;
+                    document.getElementById('profile-pic-preview').src = profilePictureBase64;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        async function handleProfileUpdate(event) {
+            event.preventDefault();
+            const btn = event.target.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            btn.textContent = 'Saving...';
+            btn.disabled = true;
+
+            try {
+                const updateData = {
+                    name: document.getElementById('profile-name').value,
+                    email: document.getElementById('profile-email').value,
+                    phone: document.getElementById('profile-phone').value,
+                    profile_picture: profilePictureBase64 // Will be null if not changed, or Base64 string
+                };
+
+                const response = await fetch('/api/customer/profile', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updateData),
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    userData = data.user; // Update local user data
+                    document.getElementById('user-name').textContent = userData.name;
+                    showToast('Success', 'Profile updated successfully', 'success');
+                } else {
+                    showToast('Error', data.message || 'Failed to update profile', 'error');
+                }
+            } catch (error) {
+                console.error('Profile update error:', error);
+                showToast('Error', 'An error occurred', 'error');
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        async function handlePasswordChange(event) {
+            event.preventDefault();
+            const currentPass = document.getElementById('current-password').value;
+            const newPass = document.getElementById('new-password').value;
+            const confirmPass = document.getElementById('confirm-password').value;
+
+            if (newPass !== confirmPass) {
+                showToast('Error', 'New passwords do not match', 'error');
+                return;
+            }
+
+            if (newPass.length < 6) {
+                showToast('Error', 'Password must be at least 6 characters', 'error');
+                return;
+            }
+
+            const btn = event.target.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            btn.textContent = 'Updating...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/api/customer/password', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        currentPassword: currentPass,
+                        newPassword: newPass
+                    }),
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showToast('Success', 'Password updated successfully', 'success');
+                    event.target.reset();
+                } else {
+                    showToast('Error', data.message || 'Failed to update password', 'error');
+                }
+            } catch (error) {
+                console.error('Password update error:', error);
+                showToast('Error', 'An error occurred', 'error');
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        async function checkAuth() {
+            try {
+                const response = await fetch('/api/customer/check', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (!data.authenticated) {
+                    window.location.href = 'customer-login.html';
+                    return false;
+                }
+
+                userData = data.user;
+                document.getElementById('user-name').textContent = userData.name;
+
+                // Pre-populate profile pic if exists
+                if (userData.profile_picture) {
+                    document.getElementById('profile-pic-preview').src = userData.profile_picture;
+                }
+
+                return true;
+            } catch (error) {
+                console.error('Auth check error:', error);
+                window.location.href = 'customer-login.html';
+                return false;
+            }
+        }
+
+        async function loadBookings() {
+            try {
+                const response = await fetch('/api/customer/bookings', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    displayBookings(data.data);
+                    updateStats(data.data);
+                }
+            } catch (error) {
+                console.error('Error loading bookings:', error);
+                showToast('Error', 'Failed to load bookings', 'error');
+            }
+        }
+
+        function updateStats(bookings) {
+            const total = bookings.length;
+            const upcoming = bookings.filter(b =>
+                (b.status === 'pending' || b.status === 'confirmed') &&
+                new Date(b.booking_date) >= new Date()
+            ).length;
+            const completed = bookings.filter(b => b.status === 'completed').length;
+
+            document.getElementById('total-bookings').textContent = total;
+            document.getElementById('upcoming-bookings').textContent = upcoming;
+            document.getElementById('completed-bookings').textContent = completed;
+        }
+
+        function displayBookings(bookings) {
+            const container = document.getElementById('bookings-container');
+
+            if (bookings.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No bookings yet</h3>
+                        <p>Book your first pet care service!</p>
+                        <a href="index.html#contact" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">Book Now</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = bookings.map(booking => `
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <div>
+                            <h3 style="margin-bottom: 0.5rem;">${booking.service_name || booking.service}</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Booking #${booking.id}</p>
+                        </div>
+                        <span class="booking-status status-${booking.status}">${booking.status}</span>
+                    </div>
+                    <div class="booking-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Date</div>
+                            <div class="detail-value">${new Date(booking.booking_date).toLocaleDateString()}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Time</div>
+                            <div class="detail-value">${booking.booking_time}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Pet</div>
+                            <div class="detail-value">${booking.pet_name || 'N/A'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Price</div>
+                            <div class="detail-value">₹${booking.service_price || 'N/A'}</div>
+                        </div>
+                    </div>
+                    ${booking.notes ? `<p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.875rem;"><strong>Notes:</strong> ${booking.notes}</p>` : ''}
+                </div>
+            `).join('');
+        }
+
+        async function logout() {
+            try {
+                await fetch('/api/customer/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                window.location.href = 'index.html';
+            }
+        }
+
+        async function init() {
+            const isAuth = await checkAuth();
+            if (isAuth) {
+                loadBookings();
+            }
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Transparent pricing for professional pet care services. View our competitive rates for pet sitting, dog walking, boarding, grooming, and more.">
+    <title>Pricing - PawCare Pet Services</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .pricing-hero {
+            background: var(--gradient-hero);
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .pricing-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .pricing-hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid var(--primary);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .pricing-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-title {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .pricing-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: var(--font-heading);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price span {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .pricing-duration {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.75rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .pricing-cta {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-heading);
+        }
+
+        .pricing-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(245, 158, 11, 0.3);
+        }
+
+        .pricing-card.featured .pricing-cta {
+            background: var(--gradient-secondary);
+        }
+
+        .packages-section {
+            background: var(--bg-secondary);
+            padding: 4rem 0;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            transition: all 0.3s;
+        }
+
+        .package-card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .package-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-info p {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .package-savings {
+            display: inline-block;
+            background: #d1fae5;
+            color: #065f46;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .package-price {
+            text-align: right;
+        }
+
+        .package-price .original {
+            text-decoration: line-through;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .package-price .discounted {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: var(--font-heading);
+        }
+
+        @media (max-width: 768px) {
+            .package-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .package-price {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav id="main-navigation" class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🐾</span>
+                    <span class="logo-text">PawCare</span>
+                </a>
+                <button id="mobile-menu-toggle" class="mobile-menu-btn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul id="nav-menu" class="nav-menu">
+                    <li><a href="index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="index.html#services" class="nav-link">Services</a></li>
+                    <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                    <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                    <li><a href="index.html#contact" class="nav-link btn-primary">Book Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pricing-hero">
+        <div class="container">
+            <h1>Simple, Transparent Pricing</h1>
+            <p>Professional pet care services at competitive rates. No hidden fees, just honest pricing.</p>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section style="padding: 4rem 0;">
+        <div class="container">
+            <div class="pricing-grid">
+                <!-- Pet Sitting -->
+                <div class="pricing-card">
+                    <div class="pricing-icon">🏠</div>
+                    <h3 class="pricing-title">Pet Sitting</h3>
+                    <p class="pricing-subtitle">In-home care while you're away</p>
+                    <div class="pricing-price">₹500-700<span>/visit</span></div>
+                    <div class="pricing-duration">60 minutes per visit</div>
+                    <ul class="pricing-features">
+                        <li>Feeding & fresh water</li>
+                        <li>Playtime & exercise</li>
+                        <li>Medication administration</li>
+                        <li>Daily photo updates</li>
+                        <li>Litter box/potty breaks</li>
+                    </ul>
+                    <button class="pricing-cta" onclick="window.location.href='index.html#contact'">Book Now</button>
+                </div>
+
+                <!-- Dog Walking -->
+                <div class="pricing-card featured">
+                    <div class="featured-badge">Popular</div>
+                    <div class="pricing-icon">🦮</div>
+                    <h3 class="pricing-title">Dog Walking</h3>
+                    <p class="pricing-subtitle">Daily exercise & adventures</p>
+                    <div class="pricing-price">₹300-600<span>/walk</span></div>
+                    <div class="pricing-duration">30 minutes per walk</div>
+                    <ul class="pricing-features">
+                        <li>Flexible scheduling</li>
+                        <li>GPS tracked walks</li>
+                        <li>Small group options</li>
+                        <li>Fresh water provided</li>
+                        <li>Paw cleaning after walk</li>
+                    </ul>
+                    <button class="pricing-cta" onclick="window.location.href='index.html#contact'">Book Now</button>
+                </div>
+
+                <!-- Pet Boarding -->
+                <div class="pricing-card">
+                    <div class="pricing-icon">🛏️</div>
+                    <h3 class="pricing-title">Pet Boarding</h3>
+                    <p class="pricing-subtitle">Overnight stays in home setting</p>
+                    <div class="pricing-price">₹300-1000+<span>/night</span></div>
+                    <div class="pricing-duration">24-hour care</div>
+                    <ul class="pricing-features">
+                        <li>Spacious accommodations</li>
+                        <li>Regular activity times</li>
+                        <li>Special diet catering</li>
+                        <li>Video updates</li>
+                        <li>24/7 supervision</li>
+                    </ul>
+                    <button class="pricing-cta" onclick="window.location.href='index.html#contact'">Book Now</button>
+                </div>
+
+                <!-- Grooming -->
+                <div class="pricing-card">
+                    <div class="pricing-icon">✨</div>
+                    <h3 class="pricing-title">Grooming</h3>
+                    <p class="pricing-subtitle">Professional grooming services</p>
+                    <div class="pricing-price">₹300-700<span>/session</span></div>
+                    <div class="pricing-duration">90 minutes</div>
+                    <ul class="pricing-features">
+                        <li>Bath & brush</li>
+                        <li>Nail trimming</li>
+                        <li>Ear cleaning</li>
+                        <li>Breed-specific cuts</li>
+                        <li>Teeth brushing</li>
+                    </ul>
+                    <button class="pricing-cta" onclick="window.location.href='index.html#contact'">Book Now</button>
+                </div>
+
+                <!-- Vet Visits -->
+                <div class="pricing-card">
+                    <div class="pricing-icon">🏥</div>
+                    <h3 class="pricing-title">Vet Visits</h3>
+                    <p class="pricing-subtitle">Safe transportation to appointments</p>
+                    <div class="pricing-price">₹700-1000+<span>/trip</span></div>
+                    <div class="pricing-duration">Up to 2 hours</div>
+                    <ul class="pricing-features">
+                        <li>Safe transportation</li>
+                        <li>Appointment coordination</li>
+                        <li>Waiting room support</li>
+                        <li>Health updates</li>
+                        <li>Medication pickup</li>
+                    </ul>
+                    <button class="pricing-cta" onclick="window.location.href='index.html#contact'">Book Now</button>
+                </div>
+
+                <!-- Training Support -->
+                <div class="pricing-card">
+                    <div class="pricing-icon">🎓</div>
+                    <h3 class="pricing-title">Training Support</h3>
+                    <p class="pricing-subtitle">Reinforcement of training routines</p>
+                    <div class="pricing-price">₹500-3000+<span>/session</span></div>
+                    <div class="pricing-duration">60 minutes</div>
+                    <ul class="pricing-features">
+                        <li>Positive reinforcement</li>
+                        <li>Custom routines</li>
+                        <li>Behavioral support</li>
+                        <li>Progress tracking</li>
+                        <li>Owner consultation</li>
+                    </ul>
+                    <button class="pricing-cta" onclick="window.location.href='index.html#contact'">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Package Deals -->
+    <section class="packages-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Package Deals</h2>
+                <p class="section-subtitle">Save more with our bundled packages</p>
+            </div>
+
+            <div class="package-card">
+                <div class="package-info">
+                    <h3>Dog Walking - 5 Pack</h3>
+                    <p>Five dog walking sessions at a discounted rate</p>
+                    <span class="package-savings">Save ₹200/span>
+                </div>
+                <div class="package-price">
+                    <div class="original">₹3000</div>
+                    <div class="discounted">₹2800</div>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="package-info">
+                    <h3>Dog Walking - 10 Pack</h3>
+                    <p>Ten dog walking sessions with maximum savings</p>
+                    <span class="package-savings">Save ₹400</span>
+                </div>
+                <div class="package-price">
+                    <div class="original">₹6000</div>
+                    <div class="discounted">₹5600</div>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="package-info">
+                    <h3>Monthly Pet Sitting</h3>
+                    <p>8 pet sitting visits per month (2 per week)</p>
+                    <span class="package-savings">Save ₹300</span>
+                </div>
+                <div class="package-price">
+                    <div class="original">₹3600</div>
+                    <div class="discounted">₹3300</div>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="package-info">
+                    <h3>Complete Care Package</h3>
+                    <p>4 walks + 2 grooming sessions + 1 vet visit</p>
+                    <span class="package-savings">Save 300</span>
+                </div>
+                <div class="package-price">
+                    <div class="original">₹4000</div>
+                    <div class="discounted">₹3700</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="logo-icon">🐾</span>
+                        <span class="logo-text">PawCare</span>
+                    </div>
+                    <p class="footer-tagline">Professional pet care with love</p>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; Swaroop Rayapalli 2025 PawCare. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
