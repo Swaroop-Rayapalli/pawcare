@@ -7,134 +7,172 @@ if (!process.env.DATABASE_URL) {
     throw new Error('DATABASE_URL environment variable is not set. This is required for PostgreSQL connection.');
 }
 
-// Create PostgreSQL connection pool
+console.log('🔗 Connecting to PostgreSQL...');
+console.log('📍 Database URL:', process.env.DATABASE_URL.replace(/:[^:@]+@/, ':****@')); // Hide password in logs
+
+// Create PostgreSQL connection pool with improved settings
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-    max: 10,
+    max: 20, // Increased pool size
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000
+    connectionTimeoutMillis: 10000, // Increased timeout
+    keepAlive: true,
+    keepAliveInitialDelayMillis: 10000
+});
+
+// Handle pool errors
+pool.on('error', (err) => {
+    console.error('❌ Unexpected database pool error:', err);
+});
+
+// Test connection
+pool.on('connect', () => {
+    console.log('✅ PostgreSQL client connected');
 });
 
 // Initialize database - create tables if they don't exist
 async function initializeDatabase() {
-    try {
-        // Create customers table
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS customers (
-                id SERIAL PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                email VARCHAR(255) UNIQUE NOT NULL,
-                phone VARCHAR(50),
-                profile_picture TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
+    const maxRetries = 5;
+    let retries = 0;
 
-        // Create pets table
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS pets (
-                id SERIAL PRIMARY KEY,
-                customer_id INTEGER NOT NULL,
-                name VARCHAR(255) NOT NULL,
-                type VARCHAR(100),
-                breed VARCHAR(100),
-                age INTEGER,
-                special_needs TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
-            )
-        `);
+    while (retries < maxRetries) {
+        try {
+            console.log(`🔄 Attempting database initialization (attempt ${retries + 1}/${maxRetries})...`);
 
-        // Create services table
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS services (
-                id SERIAL PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                description TEXT,
-                price DECIMAL(10, 2) NOT NULL,
-                duration_minutes INTEGER NOT NULL
-            )
-        `);
+            // Test connection first
+            await pool.query('SELECT NOW()');
+            console.log('✅ Database connection successful');
 
-        // Create bookings table
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS bookings (
-                id SERIAL PRIMARY KEY,
-                customer_id INTEGER NOT NULL,
-                pet_id INTEGER,
-                service_id INTEGER NOT NULL,
-                booking_date DATE NOT NULL,
-                booking_time TIME NOT NULL,
-                status VARCHAR(50) DEFAULT 'pending',
-                notes TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE,
-                FOREIGN KEY (pet_id) REFERENCES pets(id) ON DELETE SET NULL,
-                FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
-            )
-        `);
+            // Create customers table
+            await pool.query(`
+                CREATE TABLE IF NOT EXISTS customers (
+                    id SERIAL PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) UNIQUE NOT NULL,
+                    phone VARCHAR(50),
+                    profile_picture TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            `);
 
-        // Create users table (for customer portal)
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS users (
-                id SERIAL PRIMARY KEY,
-                customer_id INTEGER NOT NULL,
-                email VARCHAR(255) UNIQUE NOT NULL,
-                password_hash VARCHAR(255) NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
-            )
-        `);
+            // Create pets table
+            await pool.query(`
+                CREATE TABLE IF NOT EXISTS pets (
+                    id SERIAL PRIMARY KEY,
+                    customer_id INTEGER NOT NULL,
+                    name VARCHAR(255) NOT NULL,
+                    type VARCHAR(100),
+                    breed VARCHAR(100),
+                    age INTEGER,
+                    special_needs TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
+                )
+            `);
 
-        // Create admins table
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS admins (
-                id SERIAL PRIMARY KEY,
-                username VARCHAR(255) UNIQUE NOT NULL,
-                email VARCHAR(255) UNIQUE NOT NULL,
-                profile_picture TEXT,
-                password_hash VARCHAR(255) NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
+            // Create services table
+            await pool.query(`
+                CREATE TABLE IF NOT EXISTS services (
+                    id SERIAL PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    description TEXT,
+                    price DECIMAL(10, 2) NOT NULL,
+                    duration_minutes INTEGER NOT NULL
+                )
+            `);
 
-        // Create feedback table
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS feedback (
-                id SERIAL PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                email VARCHAR(255) NOT NULL,
-                rating INTEGER NOT NULL,
-                category VARCHAR(100) NOT NULL,
-                message TEXT NOT NULL,
-                public BOOLEAN DEFAULT FALSE,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
+            // Create bookings table
+            await pool.query(`
+                CREATE TABLE IF NOT EXISTS bookings (
+                    id SERIAL PRIMARY KEY,
+                    customer_id INTEGER NOT NULL,
+                    pet_id INTEGER,
+                    service_id INTEGER NOT NULL,
+                    booking_date DATE NOT NULL,
+                    booking_time TIME NOT NULL,
+                    status VARCHAR(50) DEFAULT 'pending',
+                    notes TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE,
+                    FOREIGN KEY (pet_id) REFERENCES pets(id) ON DELETE SET NULL,
+                    FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
+                )
+            `);
 
-        console.log('✅ Database tables initialized');
+            // Create users table (for customer portal)
+            await pool.query(`
+                CREATE TABLE IF NOT EXISTS users (
+                    id SERIAL PRIMARY KEY,
+                    customer_id INTEGER NOT NULL,
+                    email VARCHAR(255) UNIQUE NOT NULL,
+                    password_hash VARCHAR(255) NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
+                )
+            `);
 
-        // Initialize default admin if none exists
-        const adminsResult = await pool.query('SELECT COUNT(*) as count FROM admins');
-        if (parseInt(adminsResult.rows[0].count) === 0) {
-            const defaultAdmin = {
-                username: 'admin',
-                email: process.env.ADMIN_EMAIL || 'admin@pawcare.com',
-                profile_picture: null,
-                password_hash: bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'PawCareAdmin2025!', 10)
-            };
-            await pool.query(
-                'INSERT INTO admins (username, email, profile_picture, password_hash) VALUES ($1, $2, $3, $4)',
-                [defaultAdmin.username, defaultAdmin.email, defaultAdmin.profile_picture, defaultAdmin.password_hash]
-            );
-            console.log('✅ Default admin account initialized');
+            // Create admins table
+            await pool.query(`
+                CREATE TABLE IF NOT EXISTS admins (
+                    id SERIAL PRIMARY KEY,
+                    username VARCHAR(255) UNIQUE NOT NULL,
+                    email VARCHAR(255) UNIQUE NOT NULL,
+                    profile_picture TEXT,
+                    password_hash VARCHAR(255) NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            `);
+
+            // Create feedback table
+            await pool.query(`
+                CREATE TABLE IF NOT EXISTS feedback (
+                    id SERIAL PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL,
+                    rating INTEGER NOT NULL,
+                    category VARCHAR(100) NOT NULL,
+                    message TEXT NOT NULL,
+                    public BOOLEAN DEFAULT FALSE,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            `);
+
+            console.log('✅ Database tables initialized');
+
+            // Initialize default admin if none exists
+            const adminsResult = await pool.query('SELECT COUNT(*) as count FROM admins');
+            if (parseInt(adminsResult.rows[0].count) === 0) {
+                const defaultAdmin = {
+                    username: 'admin',
+                    email: process.env.ADMIN_EMAIL || 'admin@pawcare.com',
+                    profile_picture: null,
+                    password_hash: bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'PawCareAdmin2025!', 10)
+                };
+                await pool.query(
+                    'INSERT INTO admins (username, email, profile_picture, password_hash) VALUES ($1, $2, $3, $4)',
+                    [defaultAdmin.username, defaultAdmin.email, defaultAdmin.profile_picture, defaultAdmin.password_hash]
+                );
+                console.log('✅ Default admin account initialized');
+            }
+
+            console.log('✅ Database initialized successfully');
+            return; // Success, exit retry loop
+
+        } catch (error) {
+            retries++;
+            console.error(`❌ Database initialization error (attempt ${retries}/${maxRetries}):`, error.message);
+
+            if (retries >= maxRetries) {
+                console.error('❌ Max retries reached. Database initialization failed.');
+                throw error;
+            }
+
+            // Wait before retrying (exponential backoff)
+            const waitTime = Math.min(1000 * Math.pow(2, retries), 10000);
+            console.log(`⏳ Waiting ${waitTime}ms before retry...`);
+            await new Promise(resolve => setTimeout(resolve, waitTime));
         }
-
-        console.log('✅ Database initialized');
-    } catch (error) {
-        console.error('❌ Database initialization error:', error);
-        throw error;
     }
 }
 
