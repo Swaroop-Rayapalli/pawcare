@@ -898,6 +898,52 @@ async function startServer() {
         }
     });
 
+    // Get all bookings (for admin dashboard)
+    app.get('/api/bookings', async (req, res) => {
+        try {
+            const bookings = await getAllBookings();
+            res.json({
+                success: true,
+                data: bookings
+            });
+        } catch (error) {
+            console.error('Get bookings error:', error);
+            res.status(500).json({ success: false, error: error.message });
+        }
+    });
+
+    // Get customer bookings
+    app.get('/api/customer/bookings', async (req, res) => {
+        if (!req.session || !req.session.isCustomerAuthenticated) {
+            return res.status(401).json({ success: false, message: 'Unauthorized' });
+        }
+
+        try {
+            const bookings = await getBookingsByCustomer(req.session.customerId);
+            res.json({
+                success: true,
+                data: bookings
+            });
+        } catch (error) {
+            console.error('Get customer bookings error:', error);
+            res.status(500).json({ success: false, error: error.message });
+        }
+    });
+
+    // Get all customers (for admin dashboard)
+    app.get('/api/customers', async (req, res) => {
+        try {
+            const customers = await getAllCustomers();
+            res.json({
+                success: true,
+                data: customers
+            });
+        } catch (error) {
+            console.error('Get customers error:', error);
+            res.status(500).json({ success: false, error: error.message });
+        }
+    });
+
     // ==================== Feedback ====================
 
     // Create feedback
