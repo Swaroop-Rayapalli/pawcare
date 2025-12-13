@@ -2,6 +2,11 @@ const { Pool } = require('pg');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
+// Validate DATABASE_URL is set
+if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL environment variable is not set. This is required for PostgreSQL connection.');
+}
+
 // Create PostgreSQL connection pool
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
