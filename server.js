@@ -38,7 +38,8 @@ const {
     initializeEmailService,
     sendStatusUpdateEmail,
     sendBookingConfirmationEmail,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    sendFeedbackNotificationEmail
 } = require('./email-service');
 const { exportToExcel, exportBookingsToCSV } = require('./excel-export');
 const fs = require('fs');
@@ -969,6 +970,18 @@ async function startServer() {
 
             const { createFeedback } = require('./database');
             const result = createFeedback(name, email, rating, category, message, public || false);
+
+            // Send feedback notification email to admin
+            sendFeedbackNotificationEmail({
+                name,
+                email,
+                rating,
+                category,
+                message,
+                public: public || false
+            }).catch(err =>
+                console.error('Feedback email sending failed:', err.message)
+            );
 
             res.status(201).json({
                 success: true,

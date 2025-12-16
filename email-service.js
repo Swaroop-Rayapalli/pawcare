@@ -323,9 +323,71 @@ async function sendPasswordResetEmail(email, tempPassword) {
     }
 }
 
+// Send feedback notification email to admin
+async function sendFeedbackNotificationEmail(feedback) {
+    if (!transporter) {
+        console.log('⚠️ Email service not initialized');
+        return null;
+    }
+
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER;
+    if (!adminEmail) {
+        console.log('⚠️ No admin email configured');
+        return null;
+    }
+
+    const stars = '⭐'.repeat(feedback.rating);
+    const html = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f7fafc;">
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <h1 style="color: #667eea; margin-bottom: 20px;">💬 New Feedback Received!</h1>
+                <p style="font-size: 16px; color: #2d3748; line-height: 1.6;">
+                    A customer has submitted feedback on PawCare.
+                </p>
+                <div style="background: #f7fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="color: #4a5568; margin-bottom: 15px;">Feedback Details</h3>
+                    <p style="margin: 8px 0;"><strong>From:</strong> ${feedback.name}</p>
+                    <p style="margin: 8px 0;"><strong>Email:</strong> ${feedback.email}</p>
+                    <p style="margin: 8px 0;"><strong>Rating:</strong> ${stars} (${feedback.rating}/5)</p>
+                    <p style="margin: 8px 0;"><strong>Category:</strong> ${feedback.category}</p>
+                    <p style="margin: 8px 0;"><strong>Public:</strong> ${feedback.public ? 'Yes' : 'No'}</p>
+                    <div style="margin-top: 15px; padding: 15px; background: white; border-left: 4px solid #667eea; border-radius: 4px;">
+                        <strong>Message:</strong><br>
+                        <p style="margin-top: 8px; color: #2d3748;">${feedback.message}</p>
+                    </div>
+                </div>
+                <a href="http://localhost:3000/admin.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                    View in Admin Dashboard
+                </a>
+            </div>
+        </div>
+    `;
+
+    try {
+        const info = await transporter.sendMail({
+            from: `"PawCare System" <${process.env.SMTP_USER || 'noreply@pawcare.com'}>`,
+            to: adminEmail,
+            subject: `💬 New Feedback: ${feedback.rating}⭐ from ${feedback.name}`,
+            html: html
+        });
+
+        console.log('✅ Feedback notification sent to admin:', adminEmail);
+
+        if (!process.env.SMTP_HOST) {
+            console.log('📧 Preview URL:', nodemailer.getTestMessageUrl(info));
+        }
+
+        return info;
+    } catch (error) {
+        console.error('❌ Email sending failed:', error.message);
+        return null;
+    }
+}
+
 module.exports = {
     initializeEmailService,
     sendStatusUpdateEmail,
     sendBookingConfirmationEmail,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    sendFeedbackNotificationEmail
 };
