@@ -240,7 +240,7 @@ async function sendBookingConfirmationEmail(booking) {
                         <p style="font-size: 16px; color: #2d3748; line-height: 1.6;">
                             Please review and confirm this booking in the admin dashboard.
                         </p>
-                        <a href="http://localhost:3000/admin.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                        <a href="${process.env.PUBLIC_URL || 'http://localhost:3000'}/admin.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
                             View in Admin Dashboard
                         </a>
                     </div>
@@ -356,7 +356,7 @@ async function sendFeedbackNotificationEmail(feedback) {
                         <p style="margin-top: 8px; color: #2d3748;">${feedback.message}</p>
                     </div>
                 </div>
-                <a href="http://localhost:3000/admin.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                <a href="${process.env.PUBLIC_URL || 'http://localhost:3000'}/admin.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
                     View in Admin Dashboard
                 </a>
             </div>

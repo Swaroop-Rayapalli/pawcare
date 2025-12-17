@@ -1295,7 +1295,7 @@
             const modal = document.querySelector('.modal');
 
             try {
-                const response = await fetch(`http://localhost:3000/api/bookings/${id}`, {
+                const response = await fetch(`/api/bookings/${id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status: newStatus })
@@ -1305,7 +1305,21 @@
 
                 if (response.ok) {
                     modal.remove();
-                    showToast('Success!', `Booking status updated to ${newStatus}`, 'success');
+                    // showToast('Success!', `Booking status updated to ${newStatus}`, 'success');
+
+                    // Show success popup as requested
+                    const successModal = document.createElement('div');
+                    successModal.className = 'modal active';
+                    successModal.innerHTML = `
+                        <div class="modal-content" style="max-width: 350px; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+                            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: #10b981;">Success!</h3>
+                            <p style="color: #4a5568; margin-bottom: 1.5rem;">Booking status has been updated to <strong>${newStatus}</strong>.</p>
+                            <button class="btn btn-primary" onclick="this.closest('.modal').remove()" style="width: 100%;">Okay</button>
+                        </div>
+                    `;
+                    document.body.appendChild(successModal);
+
                     loadDashboard();
                 } else {
                     throw new Error(data.message || 'Failed to update status');
@@ -1343,7 +1357,7 @@
             const modal = document.querySelector('.modal');
 
             try {
-                const response = await fetch(`http://localhost:3000/api/bookings/${id}`, {
+                const response = await fetch(`/api/bookings/${id}`, {
                     method: 'DELETE'
                 });
 

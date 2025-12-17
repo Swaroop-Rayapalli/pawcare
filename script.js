@@ -488,17 +488,17 @@ setInterval(() => {
 }, 100);
 
 // Counter animation for stats
-const animateCounter = (element, target, duration = 2000) => {
+const animateCounter = (element, target, duration = 3000, suffix = '') => {
     let start = 0;
     const increment = target / (duration / 16);
 
     const timer = setInterval(() => {
         start += increment;
         if (start >= target) {
-            element.textContent = target;
+            element.textContent = target + suffix;
             clearInterval(timer);
         } else {
-            element.textContent = Math.floor(start);
+            element.textContent = Math.floor(start) + suffix;
         }
     }, 16);
 };
@@ -515,10 +515,12 @@ const statsObserver = new IntersectionObserver((entries) => {
                 if (text.includes('+')) {
                     const num = parseInt(text.replace(/\D/g, ''));
                     stat.textContent = '0+';
-                    animateCounter(stat, num);
-                    setTimeout(() => {
-                        stat.textContent = num + '+';
-                    }, 2000);
+                    animateCounter(stat, num, 3000, '+');
+                } else {
+                    const num = parseInt(text.replace(/\D/g, ''));
+                    if (!isNaN(num)) { // Only animate if it's a number
+                        animateCounter(stat, num, 3000);
+                    }
                 }
             });
         }
