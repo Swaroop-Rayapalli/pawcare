@@ -66,7 +66,7 @@ async function init() {
         }
 
         console.log('\n✅ Database initialization complete!');
-        console.log('📁 Database: MySQL');
+        // console.log('📁 Database: MySQL'); // Dynamic in database.js
         console.log('\n💡 You can now start the server with: npm start');
         process.exit(0);
     } catch (error) {

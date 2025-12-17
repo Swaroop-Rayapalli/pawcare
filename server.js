@@ -91,7 +91,22 @@ app.use(express.json({ limit: '10mb' })); // Increased limit for profile picture
 
 
 // Session configuration
+const MySQLStore = require('express-mysql-session')(session);
+const sessionStore = process.env.NODE_ENV === 'production' || process.env.USE_MYSQL === 'true'
+    ? new MySQLStore({
+        host: process.env.DB_HOST || 'localhost',
+        port: process.env.DB_PORT || 3306,
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        database: process.env.DB_NAME || 'pawcare_db',
+        clearExpired: true,
+        checkExpirationInterval: 900000, // 15 minutes
+        expiration: 86400000 // 1 day
+    })
+    : undefined; // Fallback to MemoryStore for local dev if not using MySQL
+
 const sessionConfig = {
+    store: sessionStore,
     secret: process.env.SESSION_SECRET || 'pawcare-secret-key-change-this',
     resave: false,
     saveUninitialized: false,
