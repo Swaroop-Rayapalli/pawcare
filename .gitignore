@@ -13,3 +13,14 @@ database-sqlite.js
 *.tmp
 .vscode/
 .idea/
+# Test/verification scripts
+verify-mysql-ready.js
+fix-env.js
+
+# SQLite database
+*.db
+*.sqlite
+*.sqlite3
+
+# Local test files
+test-*.js
