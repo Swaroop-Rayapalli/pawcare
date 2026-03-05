@@ -352,6 +352,7 @@
         </div>
     </div>
 
+    <script src="config.js"></script>
     <script src="script.js"></script>
     <script>
         let userData = null;
@@ -417,7 +418,7 @@
                     profile_picture: profilePictureBase64 // Will be null if not changed, or Base64 string
                 };
 
-                const response = await fetch('/api/customer/profile', {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/customer/profile`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(updateData),
@@ -464,7 +465,7 @@
             btn.disabled = true;
 
             try {
-                const response = await fetch('/api/customer/password', {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/customer/password`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -493,7 +494,7 @@
 
         async function checkAuth() {
             try {
-                const response = await fetch('/api/customer/check', {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/customer/check`, {
                     credentials: 'include'
                 });
                 const data = await response.json();
@@ -521,7 +522,7 @@
 
         async function loadBookings() {
             try {
-                const response = await fetch('/api/customer/bookings', {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/customer/bookings`, {
                     credentials: 'include'
                 });
                 const data = await response.json();
@@ -597,7 +598,7 @@
 
         async function logout() {
             try {
-                await fetch('/api/customer/logout', {
+                await fetch(`${CONFIG.API_BASE_URL}/api/customer/logout`, {
                     method: 'POST',
                     credentials: 'include'
                 });

@@ -379,7 +379,8 @@
             </form>
         </div>
     </div>
-    
+
+    <script src="config.js"></script>
     <script src="script.js"></script>
     <script>
         function togglePassword(inputId) {
@@ -416,7 +417,7 @@
             btn.textContent = 'Signing in...';
 
             try {
-                const response = await fetch('/api/customer/login', {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/customer/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
@@ -468,7 +469,7 @@
             btn.textContent = 'Creating account...';
 
             try {
-                const response = await fetch('/api/customer/register', {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/customer/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
@@ -497,7 +498,7 @@
         // Check if already logged in
         async function checkAuth() {
             try {
-                const response = await fetch('/api/customer/check', {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/customer/check`, {
                     credentials: 'include'
                 });
                 const data = await response.json();
@@ -537,7 +538,7 @@
             btn.textContent = 'Sending...';
 
             try {
-                const response = await fetch('/api/customer/forgot-password', {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/customer/forgot-password`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })

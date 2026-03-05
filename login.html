@@ -388,6 +388,7 @@
         </div>
     </div>
 
+    <script src="config.js"></script>
     <script>
         const loginForm = document.getElementById('login-form');
         const usernameInput = document.getElementById('username');
@@ -447,7 +448,7 @@
             loginBtn.disabled = true;
 
             try {
-                const response = await fetch('/api/auth/login', {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/auth/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -483,7 +484,7 @@
         // Check if already logged in
         async function checkAuth() {
             try {
-                const response = await fetch('/api/auth/check', {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/auth/check`, {
                     credentials: 'include'
                 });
                 const data = await response.json();
@@ -523,7 +524,7 @@
             btn.textContent = 'Sending...';
 
             try {
-                const response = await fetch('/api/admin/forgot-password', {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/admin/forgot-password`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })

@@ -81,10 +81,33 @@ const bookingLimiter = rateLimit({
 // Apply general rate limiter to all API routes
 app.use('/api/', generalLimiter);
 
-// CORS Configuration
+// CORS Configuration for Hybrid Deployment (Netlify + Render)
 app.use(cors({
-    origin: true,
-    credentials: true
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+
+        const allowedOrigins = [
+            'http://localhost:3000',
+            'http://localhost:5500',
+            'http://127.0.0.1:5500',
+            /\.netlify\.app$/ // Matches any Netlify subdomain
+        ];
+
+        const isAllowed = allowedOrigins.some(allowed => {
+            if (allowed instanceof RegExp) return allowed.test(origin);
+            return allowed === origin;
+        });
+
+        if (isAllowed) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json({ limit: '10mb' })); // Increased limit for profile pictures
@@ -114,7 +137,8 @@ const sessionConfig = {
         secure: process.env.NODE_ENV === 'production', // true in production
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
-        sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax'
+        // 'none' is required for cross-domain cookies (Netlify -> Render)
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
     }
 };
 

@@ -391,7 +391,7 @@ bookingForm.addEventListener('submit', async (e) => {
         const bookingTime = `${hour.toString().padStart(2, '0')}:${minute}`;
 
         // Send booking to API
-        const response = await fetch('/api/bookings', {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/api/bookings`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
