@@ -8,8 +8,6 @@ create-db.bat
 create-db.ps1
 create-database.sql
 setup-mysql.js
-database-postgres.js
-database-sqlite.js
 *.tmp
 .vscode/
 .idea/
