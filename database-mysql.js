@@ -483,5 +483,6 @@ module.exports = {
     createFeedback,
     getAllFeedback,
     getPublicFeedback,
-    getFeedbackById
+    getFeedbackById,
+    pool // Export the pool for session store
 };

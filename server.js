@@ -32,7 +32,8 @@ const {
     getAdminByEmail,
     getAdminById,
     updateAdmin,
-    getUserByCustomerId
+    getUserByCustomerId,
+    pool // Added pool export
 } = require('./database');
 const {
     initializeEmailService,
@@ -114,19 +115,32 @@ app.use(express.json({ limit: '10mb' })); // Increased limit for profile picture
 
 
 // Session configuration
-const MySQLStore = require('express-mysql-session')(session);
-const sessionStore = process.env.NODE_ENV === 'production' || process.env.USE_MYSQL === 'true'
-    ? new MySQLStore({
+let sessionStore;
+
+if (process.env.DATABASE_URL && (process.env.DATABASE_URL.startsWith('postgres') || process.env.DATABASE_URL.startsWith('postgresql')) || process.env.NODE_ENV === 'production') {
+    // Use PostgreSQL for sessions in production/Render
+    const pgSession = require('connect-pg-simple')(session);
+    sessionStore = new pgSession({
+        pool: pool,
+        tableName: 'session',
+        createTableIfMissing: true
+    });
+    console.log('🐘 Using PostgreSQL for session store');
+} else if (process.env.USE_MYSQL === 'true') {
+    // Use MySQL for sessions if explicitly enabled
+    const MySQLStore = require('express-mysql-session')(session);
+    sessionStore = new MySQLStore({
         host: process.env.DB_HOST || 'localhost',
         port: process.env.DB_PORT || 3306,
         user: process.env.DB_USER || 'root',
         password: process.env.DB_PASSWORD || '',
-        database: process.env.DB_NAME || 'pawcare_db',
-        clearExpired: true,
-        checkExpirationInterval: 900000, // 15 minutes
-        expiration: 86400000 // 1 day
-    })
-    : undefined; // Fallback to MemoryStore for local dev if not using MySQL
+        database: process.env.DB_NAME || 'pawcare_db'
+    });
+    console.log('🐬 Using MySQL for session store');
+} else {
+    // Default to MemoryStore for local SQLite development
+    console.log('💾 Using MemoryStore for local session development');
+}
 
 const sessionConfig = {
     store: sessionStore,
