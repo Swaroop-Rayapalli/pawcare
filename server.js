@@ -45,7 +45,7 @@ const { exportToExcel, exportBookingsToCSV } = require('./excel-export');
 const fs = require('fs');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Security Headers with Helmet (relaxed for mobile compatibility)
 app.use(helmet({
