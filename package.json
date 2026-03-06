@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node server.js",
     "init-db": "node init-db.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "deploy:prod": "git push origin main",
+    "deploy:hook": "node scripts/trigger-deploy.js",
+    "check:prod": "node scripts/check-health.js"
   },
   "keywords": [
     "pet-care",
