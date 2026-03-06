@@ -1,8 +1,8 @@
 const https = require('https');
 require('dotenv').config();
 
-// Determine URL - default to the one in your config.js but allow override via .env
-const PROD_URL = process.env.PROD_API_URL || 'https://pawcare-backend.onrender.com';
+// Determine URL - prioritize config.js, then allow override via .env
+const PROD_URL = process.env.PROD_API_URL || 'https://pawcare-server.onrender.com';
 const url = `${PROD_URL}/api/health`;
 
 async function checkHealth() {
