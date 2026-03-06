@@ -92,6 +92,7 @@ app.use(cors({
             'http://localhost:3000',
             'http://localhost:5500',
             'http://127.0.0.1:5500',
+            'https://localhost:3000',
             /\.netlify\.app$/ // Matches any Netlify subdomain
         ];
 
@@ -103,12 +104,13 @@ app.use(cors({
         if (isAllowed) {
             callback(null, true);
         } else {
+            console.log('CORS Blocked for origin:', origin);
             callback(new Error('Not allowed by CORS'));
         }
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
 app.use(express.json({ limit: '10mb' })); // Increased limit for profile pictures
