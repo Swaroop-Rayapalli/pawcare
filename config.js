@@ -5,7 +5,7 @@ const CONFIG = {
     // You can find this at the top of your Render Dashboard (e.g., https://pawcare-backend.onrender.com)
     API_BASE_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
         ? 'http://localhost:3000'
-        : 'https://pawcare-backend.onrender.com' // <-- UPDATE THIS TO YOUR ACTUAL RENDER URL
+        : 'https://pawcare-server.onrender.com' 
 };
 
 // Export for use in other scripts
