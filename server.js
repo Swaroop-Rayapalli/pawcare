@@ -32,8 +32,7 @@ const {
     getAdminByEmail,
     getAdminById,
     updateAdmin,
-    getUserByCustomerId,
-    pool // Added pool export
+    getUserByCustomerId
 } = require('./database');
 const {
     initializeEmailService,
@@ -119,15 +118,21 @@ app.use(express.json({ limit: '10mb' })); // Increased limit for profile picture
 // Session configuration
 let sessionStore;
 
-if (process.env.DATABASE_URL && (process.env.DATABASE_URL.startsWith('postgres') || process.env.DATABASE_URL.startsWith('postgresql')) || process.env.NODE_ENV === 'production') {
-    // Use PostgreSQL for sessions in production/Render
-    const pgSession = require('connect-pg-simple')(session);
-    sessionStore = new pgSession({
-        pool: pool,
-        tableName: 'session',
-        createTableIfMissing: true
-    });
-    console.log('🐘 Using PostgreSQL for session store');
+// Only use PostgreSQL session store if DATABASE_URL is explicitly set AND starts with postgres
+if (process.env.DATABASE_URL && (process.env.DATABASE_URL.startsWith('postgres') || process.env.DATABASE_URL.startsWith('postgresql'))) {
+    try {
+        const { Pool } = require('pg');
+        const pgPool = new Pool({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
+        const pgSession = require('connect-pg-simple')(session);
+        sessionStore = new pgSession({
+            pool: pgPool,
+            tableName: 'session',
+            createTableIfMissing: true
+        });
+        console.log('🐘 Using PostgreSQL for session store');
+    } catch (e) {
+        console.warn('⚠️ Could not init PostgreSQL session store, falling back to MemoryStore:', e.message);
+    }
 } else if (process.env.USE_MYSQL === 'true') {
     // Use MySQL for sessions if explicitly enabled
     const MySQLStore = require('express-mysql-session')(session);
@@ -140,7 +145,7 @@ if (process.env.DATABASE_URL && (process.env.DATABASE_URL.startsWith('postgres')
     });
     console.log('🐬 Using MySQL for session store');
 } else {
-    // Default to MemoryStore for local SQLite development
+    // Default to MemoryStore for local JSON development
     console.log('💾 Using MemoryStore for local session development');
 }
 
