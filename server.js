@@ -171,7 +171,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use(session(sessionConfig));
 
 // Serve static files with explicit headers for mobile compatibility
-app.use(express.static(path.join(__dirname), {
+app.use(express.static(path.join(__dirname, 'public'), {
     setHeaders: (res, filePath) => {
         // Force correct MIME types for all browsers including mobile
         if (filePath.endsWith('.css')) {
@@ -1206,8 +1206,10 @@ app.get('/api/export/excel', (req, res) => {
 
 // ==================== Serve Frontend ====================
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // ==================== Start Server ====================
