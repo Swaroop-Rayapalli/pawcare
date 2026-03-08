@@ -1,16 +1,10 @@
 {
     "cleanUrls": true,
     "trailingSlash": false,
-    "builds": [
-        {
-            "src": "server.js",
-            "use": "@vercel/node"
-        }
-    ],
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "/server.js"
+            "destination": "/api/index.js"
         }
     ]
 }

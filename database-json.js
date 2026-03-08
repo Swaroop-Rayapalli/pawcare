@@ -3,10 +3,26 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
-const DATA_FILE = path.join(__dirname, 'pawcare-data.json');
+const IS_VERCEL = process.env.VERCEL === '1';
+const DATA_FILE = IS_VERCEL ? '/tmp/pawcare-data.json' : path.join(__dirname, 'pawcare-data.json');
+
+// Helper to ensure data file exists in /tmp on Vercel
+function ensureDataFile() {
+    if (IS_VERCEL && !fs.existsSync(DATA_FILE)) {
+        try {
+            const originalPath = path.join(__dirname, 'pawcare-data.json');
+            if (fs.existsSync(originalPath)) {
+                fs.copyFileSync(originalPath, DATA_FILE);
+            }
+        } catch (e) {
+            console.error('Failed to copy initial data file to /tmp:', e);
+        }
+    }
+}
 
 // Helper to load data
 function loadData() {
+    ensureDataFile();
     try {
         if (!fs.existsSync(DATA_FILE)) {
             return {
