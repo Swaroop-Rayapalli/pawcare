@@ -1017,9 +1017,9 @@ app.get('/api/customers', async (req, res) => {
 // ==================== Feedback ====================
 
 // Create feedback
-app.post('/api/feedback', (req, res) => {
+app.post('/api/feedback', async (req, res) => {
     try {
-        const { name, email, rating, category, message, public } = req.body;
+        const { name, email, rating, category, message, public: isPublic } = req.body;
 
         // Validate required fields
         if (!name || !email || !rating || !category || !message) {
@@ -1038,7 +1038,7 @@ app.post('/api/feedback', (req, res) => {
         }
 
         const { createFeedback } = require('./database');
-        const result = createFeedback(name, email, rating, category, message, public || false);
+        const result = await createFeedback(name, email, rating, category, message, isPublic || false);
 
         // Send feedback notification email to admin
         sendFeedbackNotificationEmail({
@@ -1047,7 +1047,7 @@ app.post('/api/feedback', (req, res) => {
             rating,
             category,
             message,
-            public: public || false
+            public: isPublic || false
         }).catch(err =>
             console.error('Feedback email sending failed:', err.message)
         );
