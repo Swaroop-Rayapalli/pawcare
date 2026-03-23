@@ -885,18 +885,17 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadPublicFeedback() {
     const feedbackGrid = document.getElementById('public-feedback-grid');
     const feedbackDisplay = document.getElementById('feedback-display');
+    const mainGrid = document.getElementById('main-testimonials-grid');
 
-    if (!feedbackGrid || !feedbackDisplay) return;
+    if (!feedbackGrid && !mainGrid) return;
 
     try {
         const response = await fetch(`${CONFIG.API_BASE_URL}/api/feedback/public`);
         const data = await response.json();
 
         if (data.success && data.data.length > 0) {
-            feedbackDisplay.style.display = 'block';
-            
-            feedbackGrid.innerHTML = data.data.map(item => `
-                <div class="testimonial-card glass-card scroll-reveal">
+            const feedbackHTML = data.data.map(item => `
+                <div class="testimonial-card glass-card scroll-reveal dynamic-testimonial">
                     <div class="testimonial-rating">${'⭐'.repeat(item.rating)}</div>
                     <p class="testimonial-text">"${item.message}"</p>
                     <div class="testimonial-author">
@@ -909,12 +908,27 @@ async function loadPublicFeedback() {
                 </div>
             `).join('');
 
+            // Update dedicated feedback section if it exists
+            if (feedbackGrid && feedbackDisplay) {
+                feedbackDisplay.style.display = 'block';
+                feedbackGrid.innerHTML = feedbackHTML;
+            }
+
+            // Update main testimonials section if it exists
+            if (mainGrid) {
+                // Remove previously added dynamic testimonials to avoid duplicates
+                mainGrid.querySelectorAll('.dynamic-testimonial').forEach(el => el.remove());
+                
+                // Prepend new ones to the existing static ones
+                mainGrid.insertAdjacentHTML('afterbegin', feedbackHTML);
+            }
+
             // Initialize scroll reveal for new elements
-            const newElements = feedbackGrid.querySelectorAll('.scroll-reveal');
+            const newElements = document.querySelectorAll('.dynamic-testimonial.scroll-reveal');
             if (typeof observer !== 'undefined') {
                 newElements.forEach(el => observer.observe(el));
             }
-        } else {
+        } else if (feedbackDisplay) {
             feedbackDisplay.style.display = 'none';
         }
     } catch (error) {
