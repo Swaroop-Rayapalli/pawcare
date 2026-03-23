@@ -820,7 +820,7 @@ if (feedbackForm) {
 
         try {
             // Send feedback to API
-            const response = await fetch('/api/feedback', {
+            const response = await fetch(`${CONFIG.API_BASE_URL}/api/feedback`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

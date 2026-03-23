@@ -32,7 +32,10 @@ const {
     getAdminByEmail,
     getAdminById,
     updateAdmin,
-    getUserByCustomerId
+    getUserByCustomerId,
+    createFeedback,
+    getPublicFeedback,
+    getAllFeedback
 } = require('./database');
 const {
     initializeEmailService,
@@ -1037,7 +1040,6 @@ app.post('/api/feedback', async (req, res) => {
             });
         }
 
-        const { createFeedback } = require('./database');
         const result = await createFeedback(name, email, rating, category, message, isPublic || false);
 
         // Send feedback notification email to admin
@@ -1067,7 +1069,6 @@ app.post('/api/feedback', async (req, res) => {
 // Get all feedback (Admin only)
 app.get('/api/feedback', requireAuth, async (req, res) => {
     try {
-        const { getAllFeedback } = require('./database');
         const feedback = await getAllFeedback();
         res.json({ success: true, data: feedback });
     } catch (error) {
@@ -1078,7 +1079,6 @@ app.get('/api/feedback', requireAuth, async (req, res) => {
 // Get public feedback
 app.get('/api/feedback/public', async (req, res) => {
     try {
-        const { getPublicFeedback } = require('./database');
         const feedback = await getPublicFeedback();
         res.json({ success: true, data: feedback });
     } catch (error) {
@@ -1088,30 +1088,6 @@ app.get('/api/feedback/public', async (req, res) => {
 
 
 
-// Get all customers (Admin only)
-app.get('/api/customers', async (req, res) => {
-    // Build-in security check for admin
-    if (!req.session || !req.session.isAuthenticated) {
-        return res.status(401).json({ success: false, message: 'Unauthorized' });
-    }
-
-    try {
-        const customers = await getAllCustomers();
-        res.json({ success: true, data: customers });
-    } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
-    }
-});
-
-// Get all bookings
-app.get('/api/bookings', async (req, res) => {
-    try {
-        const bookings = await getAllBookings();
-        res.json({ success: true, data: bookings });
-    } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
-    }
-});
 
 // Get booking by ID
 app.get('/api/bookings/:id', async (req, res) => {
