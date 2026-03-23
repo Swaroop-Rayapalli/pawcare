@@ -837,9 +837,13 @@ if (feedbackForm) {
 
             const result = await response.json();
 
-            if (result.success) {
+            if (response.ok) {
                 showToast('Success!', 'Thank you for your feedback!', 'success');
                 feedbackForm.reset();
+                // Reload public feedback to show the new one if public
+                if (typeof loadPublicFeedback === 'function') {
+                    loadPublicFeedback();
+                }
 
                 // Reset star rating
                 const stars = document.querySelectorAll('#star-rating .star');
@@ -870,3 +874,50 @@ if (feedbackForm) {
 
 console.log('🐾 PawCare website loaded successfully!');
 
+// Initial Load
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof loadPublicFeedback === 'function') {
+        loadPublicFeedback();
+    }
+});
+
+// Load and display public feedback
+async function loadPublicFeedback() {
+    const feedbackGrid = document.getElementById('public-feedback-grid');
+    const feedbackDisplay = document.getElementById('feedback-display');
+
+    if (!feedbackGrid || !feedbackDisplay) return;
+
+    try {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/api/feedback/public`);
+        const data = await response.json();
+
+        if (data.success && data.data.length > 0) {
+            feedbackDisplay.style.display = 'block';
+            
+            feedbackGrid.innerHTML = data.data.map(item => `
+                <div class="testimonial-card glass-card scroll-reveal">
+                    <div class="testimonial-rating">${'⭐'.repeat(item.rating)}</div>
+                    <p class="testimonial-text">"${item.message}"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">${item.name.charAt(0)}</div>
+                        <div class="author-info">
+                            <div class="author-name">${item.name}</div>
+                            <div class="author-pet">Happy Client</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Initialize scroll reveal for new elements
+            const newElements = feedbackGrid.querySelectorAll('.scroll-reveal');
+            if (typeof observer !== 'undefined') {
+                newElements.forEach(el => observer.observe(el));
+            }
+        } else {
+            feedbackDisplay.style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Error loading feedback:', error);
+    }
+}
